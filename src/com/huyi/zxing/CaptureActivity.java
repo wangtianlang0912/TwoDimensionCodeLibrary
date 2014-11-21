@@ -5,6 +5,8 @@ import com.zzl.util.LightControl;
 import java.io.IOException;
 import java.util.Vector;
 
+import nf.framework.act.NFIntentUtils;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
@@ -130,7 +132,12 @@ public class CaptureActivity extends Activity implements Callback {
 		inactivityTimer.shutdown();
 		super.onDestroy();
 	}
-	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		CaptureActivity.this.finish();
+	}
 	/**
 	 * Handler scan result
 	 * @param result
@@ -151,13 +158,15 @@ public class CaptureActivity extends Activity implements Callback {
 				iv_big_circle.setBackgroundResource(R.drawable.bar_code_center_grey);
 				iv_four_corner.setBackgroundResource(R.drawable.bar_code_four_corner_grey);
 			}
-			Intent resultIntent = new Intent();
-			Bundle bundle = new Bundle();
-			bundle.putString("result", resultString);
-			resultIntent.putExtras(bundle);
-			this.setResult(RESULT_OK, resultIntent);
+//			Intent resultIntent = new Intent();
+//			Bundle bundle = new Bundle();
+//			bundle.putString("result", resultString);
+//			resultIntent.putExtras(bundle);
+//			this.setResult(RESULT_OK, resultIntent);
+			
+			NFIntentUtils.intentToInnerBrowserAct(CaptureActivity.this, "captureAct", "", resultString);
 		}
-		CaptureActivity.this.finish();
+//		
 	}
 	
 	private void initCamera(SurfaceHolder surfaceHolder) {
