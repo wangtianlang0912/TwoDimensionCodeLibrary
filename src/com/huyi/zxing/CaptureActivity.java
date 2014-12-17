@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Vector;
 
 import nf.framework.act.NFIntentUtils;
+import nf.framework.core.util.io.ImageUtil;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -49,10 +50,10 @@ public class CaptureActivity extends Activity implements Callback {
 	private Button btn_light_control;
 	private boolean isShow=false;
 	
-	private ProgressBar pg;
-	private ImageView iv_pg_bg_grey;
-	private ImageView iv_big_circle;
-	private ImageView iv_four_corner;
+//	private ProgressBar pg;
+//	private ImageView iv_pg_bg_grey;
+//	private ImageView iv_big_circle;
+//	private ImageView iv_four_corner;
 	
 
 	/** Called when the activity is first created. */
@@ -60,13 +61,14 @@ public class CaptureActivity extends Activity implements Callback {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.camera_diy);
-		pg = (ProgressBar) findViewById(R.id.pg_camera_diy);
-		iv_pg_bg_grey = (ImageView) findViewById(R.id.iv_camera_diy);
-		iv_big_circle = (ImageView) findViewById(R.id.iv_camera_diy_circle);
-		iv_four_corner = (ImageView) findViewById(R.id.iv_camera_diy_corner);
+//		pg = (ProgressBar) findViewById(R.id.pg_camera_diy);
+//		iv_pg_bg_grey = (ImageView) findViewById(R.id.iv_camera_diy);
+//		iv_big_circle = (ImageView) findViewById(R.id.iv_camera_diy_circle);
+//		iv_four_corner = (ImageView) findViewById(R.id.iv_camera_diy_corner);
 		//ViewUtil.addTopView(getApplicationContext(), this, R.string.scan_card);
 		CameraManager.init(getApplication());
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
+//		viewfinderView.drawResultBitmap(ImageUtil.drawableToBitmap(getResources().getDrawable(R.drawable.bar_code_four_corner)));
 		btn_light_control = (Button) this.findViewById(R.id.btn_light_control);
 		hasSurface = false;
 		inactivityTimer = new InactivityTimer(this);
@@ -152,12 +154,12 @@ public class CaptureActivity extends Activity implements Callback {
 			Toast.makeText(CaptureActivity.this, "Scan failed!", Toast.LENGTH_SHORT).show();
 		}else {
 //			System.out.println("Result:"+resultString);
-			if(pg!=null&&pg.isShown()){
-				pg.setVisibility(View.GONE);
-				iv_pg_bg_grey.setVisibility(View.VISIBLE);
-				iv_big_circle.setBackgroundResource(R.drawable.bar_code_center_grey);
-				iv_four_corner.setBackgroundResource(R.drawable.bar_code_four_corner_grey);
-			}
+//			if(pg!=null&&pg.isShown()){
+//				pg.setVisibility(View.GONE);
+//				iv_pg_bg_grey.setVisibility(View.VISIBLE);
+//				iv_big_circle.setBackgroundResource(R.drawable.bar_code_center_grey);
+//				iv_four_corner.setBackgroundResource(R.drawable.bar_code_four_corner_grey);
+//			}
 //			Intent resultIntent = new Intent();
 //			Bundle bundle = new Bundle();
 //			bundle.putString("result", resultString);

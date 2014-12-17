@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -38,7 +39,7 @@ public final class ViewfinderView extends View {
 
   private static final long ANIMATION_DELAY = 100L;
   private static final int OPAQUE = 0xFF;
-
+  private static final int[] SCANNER_ALPHA = {0, 64, 128, 192, 255, 192, 128, 64};
   private final Paint paint;
   private Bitmap resultBitmap;
   private final int maskColor;
@@ -49,7 +50,9 @@ public final class ViewfinderView extends View {
   private int scannerAlpha;
   private Collection<ResultPoint> possibleResultPoints;
   private Collection<ResultPoint> lastPossibleResultPoints;
-
+  private int borderWidth=10;
+  private int borderStroke=1;
+  private int borderGap=10;
   // This constructor is used when the class is built from an XML resource.
   public ViewfinderView(Context context, AttributeSet attrs) {
     super(context, attrs);
@@ -64,6 +67,9 @@ public final class ViewfinderView extends View {
     resultPointColor = resources.getColor(R.color.possible_result_points);
     scannerAlpha = 0;
     possibleResultPoints = new HashSet<ResultPoint>(5);
+    borderWidth=dip2px(getContext(), 15);//边框线宽度
+    borderGap=dip2px(getContext(), 10);//标示具体焦点正方形的距离
+    borderStroke= dip2px(getContext(), 2);//边框线条的宽度
   }
 
   @Override
@@ -82,6 +88,7 @@ public final class ViewfinderView extends View {
     canvas.drawRect(frame.right + 1, frame.top, width, frame.bottom + 1, paint);
     canvas.drawRect(0, frame.bottom + 1, width, height, paint);
 
+    
     if (resultBitmap != null) {
       // Draw the opaque result bitmap over the scanning rectangle
       paint.setAlpha(OPAQUE);
@@ -90,18 +97,26 @@ public final class ViewfinderView extends View {
 
       // Draw a two pixel solid black border inside the framing rect
       paint.setColor(frameColor);
-      /*canvas.drawRect(frame.left, frame.top, frame.right + 1, frame.top + 2, paint);
-      canvas.drawRect(frame.left, frame.top + 2, frame.left + 2, frame.bottom - 1, paint);
-      canvas.drawRect(frame.right - 1, frame.top, frame.right + 1, frame.bottom - 1, paint);
-      canvas.drawRect(frame.left, frame.bottom - 1, frame.right + 1, frame.bottom + 1, paint);*/
-
+      //|-
+      canvas.drawRect(frame.left-borderGap, frame.top-borderGap, frame.left +borderWidth-borderGap, frame.top-borderGap+borderStroke , paint);
+      canvas.drawRect(frame.left-borderGap, frame.bottom+ borderGap, frame.left +borderWidth-borderGap, frame.bottom + borderStroke+ borderGap, paint);
+      canvas.drawRect(frame.left-borderGap, frame.top-borderGap, frame.left + borderStroke-borderGap, frame.top +borderWidth-borderGap, paint);
+      canvas.drawRect(frame.left-borderGap,frame.bottom -borderWidth+ borderGap , frame.left + borderStroke-borderGap,frame.bottom+ borderGap , paint);
+      
+      canvas.drawRect( frame.right-borderWidth+ borderGap, frame.top-borderGap,frame.right+ borderGap, frame.top-borderGap +borderStroke, paint);
+      canvas.drawRect(frame.right+ borderGap, frame.top -borderGap, frame.right + borderStroke+ borderGap, frame.top +borderWidth-borderGap, paint);
+      
+      canvas.drawRect(frame.right- borderStroke+ borderGap,frame.bottom-borderWidth+ borderGap , frame.right+ borderGap ,frame.bottom+ borderGap, paint);
+      canvas.drawRect(frame.right-borderWidth+ borderGap, frame.bottom+ borderGap, frame.right+ borderGap, frame.bottom + borderStroke+ borderGap, paint);
+      
+      
       // Draw a red "laser scanner" line through the middle to show decoding is active
-      /*paint.setColor(laserColor);
+      paint.setColor(laserColor);
       paint.setAlpha(SCANNER_ALPHA[scannerAlpha]);
       scannerAlpha = (scannerAlpha + 1) % SCANNER_ALPHA.length;
       int middle = frame.height() / 2 + frame.top;
-      canvas.drawRect(frame.left + 2, middle - 1, frame.right - 1, middle + 2, paint);*/
-
+      canvas.drawRect(frame.left + 2, middle - 1, frame.right - 1, middle + 2, paint);
+       
       Collection<ResultPoint> currentPossible = possibleResultPoints;
       Collection<ResultPoint> currentLast = lastPossibleResultPoints;
       if (currentPossible.isEmpty()) {
@@ -122,7 +137,6 @@ public final class ViewfinderView extends View {
           canvas.drawCircle(frame.left + point.getX(), frame.top + point.getY(), 3.0f, paint);
         }
       }
-
       // Request another update at the animation interval, but only repaint the laser line,
       // not the entire viewfinder mask.
       postInvalidateDelayed(ANIMATION_DELAY, frame.left, frame.top, frame.right, frame.bottom);
@@ -147,5 +161,11 @@ public final class ViewfinderView extends View {
   public void addPossibleResultPoint(ResultPoint point) {
     possibleResultPoints.add(point);
   }
-
+  /** 
+   * 根据手机的分辨率从 dp 的单位 转成为 px(像素) 
+   */  
+	public int dip2px(Context context, float dpValue) {  
+	  final float scale = context.getResources().getDisplayMetrics().density;  
+	  return (int) (dpValue * scale + 0.5f);  
+	}  
 }
