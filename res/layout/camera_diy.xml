@@ -42,7 +42,7 @@
             android:layout_marginBottom="100dp"
             android:background="@drawable/torch_off" />
     </RelativeLayout>
-
+<!-- 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -74,18 +74,21 @@
             android:layout_alignTop="@id/iv_camera_diy_circle"
             android:layout_centerInParent="true"
             android:indeterminate="true"
-            android:indeterminateDrawable="@drawable/progressbar" />
+            android:indeterminateDrawable="@drawable/progressbar" /> -->
+<!-- 
+    android:layout_alignBottom="@id/iv_camera_diy_circle"
+            android:layout_alignLeft="@id/iv_camera_diy_circle"
+            android:layout_alignRight="@id/iv_camera_diy_circle"
+            android:layout_alignTop="@id/iv_camera_diy_circle"
 
+ 
         <ImageView
             android:id="@+id/iv_camera_diy_corner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/iv_camera_diy_circle"
-            android:layout_alignLeft="@id/iv_camera_diy_circle"
-            android:layout_alignRight="@id/iv_camera_diy_circle"
-            android:layout_alignTop="@id/iv_camera_diy_circle"
+        
             android:layout_centerInParent="true"
             android:background="@drawable/bar_code_four_corner" />
     </RelativeLayout>
-
+-->
 </FrameLayout>
