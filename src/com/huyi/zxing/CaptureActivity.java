@@ -1,13 +1,8 @@
 package com.huyi.zxing;
-import com.zzl.util.LightControl;
-
-
 import java.io.IOException;
 import java.util.Vector;
 
 import nf.framework.act.NFIntentUtils;
-import nf.framework.core.util.io.ImageUtil;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
@@ -18,17 +13,18 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
+import com.zzl.util.LightControl;
 
 /**
  * Initial the camera
@@ -49,6 +45,7 @@ public class CaptureActivity extends Activity implements Callback {
 //	private ImageView cancelScanButton;
 	private Button btn_light_control;
 	private boolean isShow=false;
+	public static final String Intent_Result="intent-result";
 	
 //	private ProgressBar pg;
 //	private ImageView iv_pg_bg_grey;
@@ -153,22 +150,14 @@ public class CaptureActivity extends Activity implements Callback {
 		if (resultString.equals("")) {
 			Toast.makeText(CaptureActivity.this, "Scan failed!", Toast.LENGTH_SHORT).show();
 		}else {
-//			System.out.println("Result:"+resultString);
-//			if(pg!=null&&pg.isShown()){
-//				pg.setVisibility(View.GONE);
-//				iv_pg_bg_grey.setVisibility(View.VISIBLE);
-//				iv_big_circle.setBackgroundResource(R.drawable.bar_code_center_grey);
-//				iv_four_corner.setBackgroundResource(R.drawable.bar_code_four_corner_grey);
-//			}
-//			Intent resultIntent = new Intent();
-//			Bundle bundle = new Bundle();
-//			bundle.putString("result", resultString);
-//			resultIntent.putExtras(bundle);
-//			this.setResult(RESULT_OK, resultIntent);
-			
-			NFIntentUtils.intentToInnerBrowserAct(CaptureActivity.this, "captureAct", "", resultString);
+			Log.d("CaptureAct","Result:"+resultString);
+			Intent resultIntent = new Intent();
+			Bundle bundle = new Bundle();
+			bundle.putString(Intent_Result, resultString);
+			resultIntent.putExtras(bundle);
+			this.setResult(RESULT_OK, resultIntent);
+			finish();
 		}
-//		
 	}
 	
 	private void initCamera(SurfaceHolder surfaceHolder) {
