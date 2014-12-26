@@ -41,8 +41,8 @@ public final class CameraManager {
 
 	private static final int MIN_FRAME_WIDTH = 240;
 	private static final int MIN_FRAME_HEIGHT = 240;
-	private static final int MAX_FRAME_WIDTH = 480;
-	private static final int MAX_FRAME_HEIGHT = 480;
+	private static final int MAX_FRAME_WIDTH = 600;
+	private static final int MAX_FRAME_HEIGHT = 600;
 
 	private static CameraManager cameraManager;
 
@@ -257,6 +257,21 @@ public final class CameraManager {
 	 * @return The rectangle to draw on screen in window coordinates.
 	 */
 	public Rect getFramingRect() {
+	
+//	    Point screenResolution = configManager.getScreenResolution();
+//	    if (framingRect == null) {
+//	      if (camera == null) {
+//	        return null;
+//	      }
+//	      
+//	    int width = screenResolution.x * 7 / 10;
+//	    int height = screenResolution.y * 7 / 10;
+//	    
+//	    int leftOffset = (screenResolution.x - width) / 2;
+//	    int topOffset = (screenResolution.y - height) / 3;
+//	    framingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
+//		      
+		
 		Point screenResolution = configManager.getScreenResolution();
 		if (framingRect == null) {
 			if (camera == null) {
