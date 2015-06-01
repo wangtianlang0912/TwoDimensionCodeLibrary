@@ -2,5 +2,6 @@
 <resources>
 
     <string name="app_name">TwoDimensionCodeDemo</string>
-
+ 	<string name="torch_on">闪光灯已开启</string>
+ 	<string name="torch_off">闪光灯已关闭</string>
 </resources>

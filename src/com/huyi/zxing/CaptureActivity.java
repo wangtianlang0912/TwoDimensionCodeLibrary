@@ -101,13 +101,13 @@ public class CaptureActivity extends Activity implements Callback {
 				if(isShow){
 					isShow = false;
 					btn_light_control.setBackgroundResource(R.drawable.torch_off);
-					Toast.makeText(getApplicationContext(),"��������抽��",0).show();
+					Toast.makeText(getApplicationContext(),R.string.torch_on,0).show();
 					mLightControl.turnOff();
 				}else{
 					isShow = true;
 					btn_light_control.setBackgroundResource(R.drawable.torch_on);
 					mLightControl.turnOn();
-					Toast.makeText(getApplicationContext(), "������寮����", 0).show();
+					Toast.makeText(getApplicationContext(), R.string.torch_off, 0).show();
 				}
 				
 				
